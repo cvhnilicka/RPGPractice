@@ -15,11 +15,13 @@ namespace RPG.Combat
 
         Mover mover;
         ActionScheduler actionScheduler;
+        Animator animator;
 
         private void Start()
         {
             mover = GetComponent<Mover>();
             actionScheduler = GetComponent<ActionScheduler>();
+            animator = GetComponent<Animator>();
         }
 
         private void Update()
@@ -34,7 +36,13 @@ namespace RPG.Combat
             else
             {
                 mover.Cancel();
+                AttackBehavior();
             }
+        }
+
+        private void AttackBehavior()
+        {
+            animator.SetTrigger("attack");
         }
 
         private bool GetInRange()
@@ -53,6 +61,12 @@ namespace RPG.Combat
         {
             target = null;
         }    
+
+        // Animation Event 
+        void Hit()
+        {
+            print("HITTTT");
+        }
     }
 }
 
