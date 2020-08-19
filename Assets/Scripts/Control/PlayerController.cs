@@ -19,7 +19,8 @@ namespace RPG.Control
         void Update()
         {
             if (CombatHandler()) return;
-            MovementHandler();
+            if (MovementHandler()) return;
+            print("Nothing To Do");
         }
 
         private bool CombatHandler()
@@ -42,26 +43,21 @@ namespace RPG.Control
             return false;
         }
 
-        private void MovementHandler()
-        {
-            if (Input.GetMouseButton(0))
-            {
-                MoveToCursor();
-            }
-        }
-
-
-
-        private void MoveToCursor()
+        private bool MovementHandler()
         {
             RaycastHit hitInfo;
             bool hasHit = Physics.Raycast(GetMouseRay(), out hitInfo);
             if (hasHit)
             {
-                GetComponent<Mover>().MoveTo(hitInfo.point);
+                if (Input.GetMouseButton(0))
+                {
+                    GetComponent<Mover>().MoveTo(hitInfo.point);
+                }
+                return true;
             }
-
+            return false;
         }
+
 
         private Ray GetMouseRay()
         {
