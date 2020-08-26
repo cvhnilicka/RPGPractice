@@ -338,7 +338,7 @@ PrefabInstance:
     - target: {fileID: 5169406774214367260, guid: cca1300cd233ad74c9b384956a51c8bc,
         type: 3}
       propertyPath: healthPoints
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5449341126808661922, guid: cca1300cd233ad74c9b384956a51c8bc,
         type: 3}
@@ -1431,6 +1431,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2168305052070259442, guid: 52f9ffaf73d99084ca098ac07d7f9b36,
+        type: 3}
+      propertyPath: healthPoints
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5701896517799345341, guid: 52f9ffaf73d99084ca098ac07d7f9b36,
         type: 3}
