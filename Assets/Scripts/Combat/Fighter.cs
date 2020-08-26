@@ -60,6 +60,7 @@ namespace RPG.Combat
             {
                 // this will trigger the Hit() event below
                 transform.LookAt(target.transform);
+                animator.ResetTrigger("stopAttack");
                 animator.SetTrigger("attack");  
                 timeSinceLastAttack = 0;
             }
@@ -67,7 +68,7 @@ namespace RPG.Combat
         // Animation Event 
         void Hit()
         {
-            
+            if (target == null) return;
             target.TakeDamage(weaponDamage);
         }
 
@@ -85,6 +86,7 @@ namespace RPG.Combat
 
         public void Cancel()
         {
+            animator.ResetTrigger("attack");
             animator.SetTrigger("stopAttack");
             target = null;
         }    
