@@ -12,6 +12,9 @@ namespace RPG.Combat
         Transform target;
 
         [SerializeField] float weaponRange = 2f;
+        [SerializeField] float timeBetweenAttacks = 1f; // default 1 sec
+
+        float timeSinceLastAttack;
 
         Mover mover;
         ActionScheduler actionScheduler;
@@ -26,6 +29,7 @@ namespace RPG.Combat
 
         private void Update()
         {
+            timeSinceLastAttack += Time.deltaTime;
             if (target == null) return;
 
             if (!GetInRange())
@@ -37,12 +41,17 @@ namespace RPG.Combat
             {
                 mover.Cancel();
                 AttackBehavior();
+       
             }
         }
 
         private void AttackBehavior()
         {
-            animator.SetTrigger("attack");
+            if (timeSinceLastAttack >= timeBetweenAttacks)
+            {
+                animator.SetTrigger("attack");
+                timeSinceLastAttack = 0;
+            }
         }
 
         private bool GetInRange()
