@@ -335,6 +335,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5169406774214367260, guid: cca1300cd233ad74c9b384956a51c8bc,
+        type: 3}
+      propertyPath: healthPoints
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 5449341126808661922, guid: cca1300cd233ad74c9b384956a51c8bc,
         type: 3}
       propertyPath: m_LocalPosition.x

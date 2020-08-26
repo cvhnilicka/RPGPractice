@@ -9,7 +9,7 @@ namespace RPG.Combat
 {
     public class Fighter : MonoBehaviour, IAction
     {
-        Transform target;
+        Health target;
 
         [SerializeField] float weaponRange = 2f;
         [SerializeField] float timeBetweenAttacks = 1f; // default 1 sec
@@ -35,10 +35,16 @@ namespace RPG.Combat
             timeSinceLastAttack += Time.deltaTime;
             if (target == null) return;
 
+            if (target.IsDead())
+            {
+                target = null;
+                return;
+            }
+
             if (!GetInRange())
             {
                 // we want to move towards it probs
-                mover.MoveTo(target.position);
+                mover.MoveTo(target.transform.position);
             }
             else
             {
@@ -60,24 +66,25 @@ namespace RPG.Combat
         // Animation Event 
         void Hit()
         {
-            Health targetHealth = target.GetComponent<Health>();
-            targetHealth.TakeDamage(weaponDamage);
+            
+            target.TakeDamage(weaponDamage);
         }
 
         private bool GetInRange()
         {
-            return Vector3.Distance(target.position, transform.position) < weaponRange;
+            return Vector3.Distance(target.transform.position, transform.position) < weaponRange;
         }
 
         public void Attack(CombatTarget combatTarget)
         {
-            target = combatTarget.transform;
+            target = combatTarget.GetComponent<Health>();
             actionScheduler.StartAction(this);
             
         }
 
         public void Cancel()
         {
+            animator.SetTrigger("stopAttack");
             target = null;
         }    
 
