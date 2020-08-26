@@ -32,6 +32,10 @@ namespace RPG.Control
                 CombatTarget target;
                 if (hit.collider.TryGetComponent<CombatTarget>(out target))
                 {
+                    if (!GetComponent<Fighter>().CanAttack(target))
+                    {
+                        continue;
+                    }
                     if (Input.GetMouseButtonDown(0))
                     {
                         GetComponent<Fighter>().Attack(target);
