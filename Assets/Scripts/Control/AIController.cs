@@ -1,5 +1,6 @@
 ﻿using RPG.Combat;
 using RPG.Core;
+using RPG.Movement;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,12 +14,17 @@ namespace RPG.Control
         private Fighter fighter;
         private GameObject player;
         private Health health;
+        private Vector3 guardLocation;
+        private Mover mover;
+
 
         private void Start()
         {
             fighter = GetComponent<Fighter>();
             player = GameObject.FindWithTag("Player");
             health = GetComponent<Health>();
+            guardLocation = transform.position;
+            mover = GetComponent<Mover>();
         }
 
 
@@ -39,7 +45,10 @@ namespace RPG.Control
             else
             {
                 // stop attacking 
-                fighter.Cancel();
+                // the move action will automatically cancel fighting action
+                mover.StartMoveAction(guardLocation);
+
+
             }
         }
 
@@ -47,6 +56,13 @@ namespace RPG.Control
         {
             
             return Vector3.Distance(player.transform.position, transform.position) < chaseDistance;
+        }
+
+        // called by unity to draw gizmos
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(transform.position, chaseDistance);
         }
 
     }
