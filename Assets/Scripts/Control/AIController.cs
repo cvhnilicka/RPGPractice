@@ -15,6 +15,7 @@ namespace RPG.Control
         [SerializeField] float suspicionTime = 3f;
         [SerializeField] PatrolPath patrolPath;
         [SerializeField] float wayPointTolerance = 1;
+        [SerializeField] float waypointDwellingTime = 4f;
         private Fighter fighter;
         private GameObject player;
         private Health health;
@@ -22,6 +23,7 @@ namespace RPG.Control
         private Mover mover;
         private ActionScheduler actionScheduler;
         int waypointIndex = 0;
+        float atWaypoint = Mathf.Infinity;
 
         // remember last time guard saw player
         float timeSinceLastSawPlayer = Mathf.Infinity;
@@ -56,10 +58,14 @@ namespace RPG.Control
                 // the move action will automatically cancel fighting action
                 PatrolBehavior();
             }
+            UpdateTimers();
+
+        }
+
+        private void UpdateTimers()
+        {
             timeSinceLastSawPlayer += Time.deltaTime;
-
-
-
+            atWaypoint += Time.deltaTime;
         }
 
         private void PatrolBehavior()
@@ -70,12 +76,15 @@ namespace RPG.Control
             {
                 if (AtWaypoint())
                 {
+                    atWaypoint = 0;
                     CycleWaypoint();
                 }
                 nextPosition = GetCurrentWaypoint();
             }
-
-            mover.StartMoveAction(nextPosition);
+            if (atWaypoint > waypointDwellingTime)
+            {
+                mover.StartMoveAction(nextPosition);
+            }
         }
 
         private Vector3 GetCurrentWaypoint()
