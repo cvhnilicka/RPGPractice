@@ -11,11 +11,16 @@ namespace RPG.Control
     public class AIController : MonoBehaviour
     {
         [SerializeField] float chaseDistance = 5f; // default 5 meters
+        [SerializeField] float suspicionTime = 3f;
         private Fighter fighter;
         private GameObject player;
         private Health health;
         private Vector3 guardLocation;
         private Mover mover;
+        private ActionScheduler actionScheduler;
+
+        // remember last time guard saw player
+        float timeSinceLastSawPlayer = Mathf.Infinity;
 
 
         private void Start()
@@ -25,31 +30,47 @@ namespace RPG.Control
             health = GetComponent<Health>();
             guardLocation = transform.position;
             mover = GetComponent<Mover>();
+            actionScheduler = GetComponent<ActionScheduler>();
         }
 
 
         private void Update()
         {
             if (health.IsDead()) return;
-            CombatHandler();
-
-        }
-
-        private void CombatHandler()
-        {
-            
             if (GetInRange() && fighter.CanAttack(player))
             {
-                fighter.Attack(player);
+                timeSinceLastSawPlayer = 0;
+                AttackBehavior();
+            }
+            else if (timeSinceLastSawPlayer < suspicionTime)
+            {
+                SuspicionBehavior();
             }
             else
             {
                 // stop attacking 
                 // the move action will automatically cancel fighting action
-                mover.StartMoveAction(guardLocation);
-
-
+                GuardBehaviour();
             }
+            timeSinceLastSawPlayer += Time.deltaTime;
+
+
+
+        }
+
+        private void GuardBehaviour()
+        {
+            mover.StartMoveAction(guardLocation);
+        }
+
+        private void SuspicionBehavior()
+        {
+            actionScheduler.CancelCurrentAction();
+        }
+
+        private void AttackBehavior()
+        {
+            fighter.Attack(player);
         }
 
         private bool GetInRange()
