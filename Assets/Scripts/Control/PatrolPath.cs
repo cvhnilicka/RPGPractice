@@ -15,10 +15,10 @@ namespace RPG.Control
                 {
                     Gizmos.DrawLine(transform.GetChild(i - 1).position, transform.GetChild(i).position);
                 }
-                //if (i == transform.childCount-1)
-                //{
-                //    Gizmos.DrawLine(transform.GetChild(i).position, transform.GetChild(0).position);
-                //}
+                if (i == transform.childCount-1)
+                {
+                    Gizmos.DrawLine(transform.GetChild(i).position, transform.GetChild(0).position);
+                }
                 
             }
         }
