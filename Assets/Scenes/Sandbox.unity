@@ -7344,7 +7344,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 465096, guid: f65a7bee03bbc4542a4af2c67922b549, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 13
+      value: 4.66
       objectReference: {fileID: 0}
     - target: {fileID: 465096, guid: f65a7bee03bbc4542a4af2c67922b549, type: 3}
       propertyPath: m_LocalPosition.z
@@ -22744,6 +22744,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2080552721}
     m_Modifications:
+    - target: {fileID: 39560041207918621, guid: cca1300cd233ad74c9b384956a51c8bc,
+        type: 3}
+      propertyPath: chaseDistance
+      value: 7.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1624397906732240467, guid: cca1300cd233ad74c9b384956a51c8bc,
         type: 3}
       propertyPath: m_Name
