@@ -9,7 +9,7 @@ namespace RPG.Core
     {
         [SerializeField] Transform target;
 
-        [SerializeField] float smoothSpeed = 0.5f;
+        [SerializeField] float smoothSpeed = 0.75f;
 
         Vector3 offset;
 
